@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP | Keira Castillo</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="phone">
+
+    <!-- SCREEN 1: CARD CERRADA -->
+    <section id="intro" class="screen" aria-label="Abrir invitación">
+      <div
+        id="closedCard"
+        class="closed-card"
+        role="button"
+        tabindex="0"
+        aria-label="Toca para abrir la invitación"
+      >
+        <div class="cover-band">
+          <div class="cover-name">Keira Ilse</div>
+        </div>
+
+        <p class="cover-subtitle">Estas Invidado</p>
+
+        <div id="tapHint" class="tap-hint">
+           Tap!
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: INVITACIÓN -->
+    <section id="inviteScreen" class="screen hidden" aria-label="Invitación">
+      <article id="invitationCard" class="invitation-card">
+
+        <div class="art-window" aria-label="Monet Water Lilies artwork"></div>
+
+        <div class="invite-content">
+  <p class="eyebrow">Celebra con nosotros una noche especial para</p>
+
+  <h1>Keira Ilse</h1>
+
+  <p class="script-text">Sweet Sixteen</p>
+
+  <div class="divider"></div>
+
+  <section class="event-details">
+    <div class="detail-block date-block">
+      <span class="detail-label">Fecha</span>
+      <strong>Domingo 21 de junio, 2026</strong>
+    </div>
+
+    <div class="detail-block">
+      <span class="detail-label">Hora</span>
+      <strong>8:00 PM</strong>
+    </div>
+
+    <div class="detail-block location-block">
+      <span class="detail-label">Lugar</span>
+      <strong>📍 Jardín Terraza Lopez</strong>
+      <p>
+        Calle Ramon Rayon, esquina con Algodonero,<br />
+        Waterfill Río Bravo
+      </p>
+    </div>
+
+    <div class="detail-block">
+      <span class="detail-label">Dress Code</span>
+      <strong>Semi-formal</strong>
+    </div>
+  </section>
+
+  <p class="note">
+    Por favor confirma tu asistencia para que podamos guardar tu lugar.
+  </p>
+
+  <button id="openRsvp" class="btn rsvp-btn" type="button">
+    RSVP
+  </button>
+</div>
+
+      </article>
+    </section>
+
+  </main>
+
+  <!-- OVERLAY FORM -->
+  <section id="overlay" class="overlay hidden" aria-label="Formulario RSVP">
+    <form id="rsvpForm" class="modal">
+
+      <button
+        id="closeModal"
+        class="close"
+        type="button"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <h2 class="modal-title">Asistencia</h2>
+
+      <p class="modal-subtitle">
+        Confirma si podrás acompañarnos.
+      </p>
+
+      <div class="choices" role="radiogroup" aria-label="Asistirá">
+        <label class="choice">
+          <input type="radio" name="attending" value="Sí" />
+          <span class="check"></span>
+          Sí asistiré
+        </label>
+
+        <label class="choice">
+          <input type="radio" name="attending" value="No" />
+          <span class="check"></span>
+          No asistiré
+        </label>
+      </div>
+
+      <div id="familyField" class="field">
+  <label class="field-label" for="familyName">
+    Nombre / Familia
+  </label>
+
+  <input
+    id="familyName"
+    name="familyName"
+    type="text"
+    placeholder="Ej. Castillo Family"
+    autocomplete="name"
+    required
+  />
+</div>
+
+      <button id="submitBtn" class="btn submit-btn" type="submit">
+        Enviar
+      </button>
+
+      <p id="errorText" class="error" aria-live="polite"></p>
+
+    </form>
+  </section>
+
+  <!-- POP UP MESSAGE -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

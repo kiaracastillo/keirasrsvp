@@ -1,0 +1,745 @@
+:root {
+  --paper: #fffdf8;
+  --ink: #20202a;
+  --soft: #666270;
+  --blue: #8fb8c9;
+  --deep: #315d68;
+  --pink: #e7b6c6;
+  --shadow: 0 24px 70px rgba(23, 42, 53, 0.28);
+  --radius: 28px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #bdd8df;
+}
+
+/* Fondo borroso con la pintura */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -32px;
+  background:
+    linear-gradient(
+      rgba(129, 176, 190, 0.22),
+      rgba(230, 179, 201, 0.2)
+    ),
+    url("water-lilies.jpg") center / cover no-repeat;
+  filter: blur(14px) saturate(1.08);
+  transform: scale(1.08);
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 255, 255, 0.46),
+    rgba(49, 93, 104, 0.25)
+  );
+  z-index: -1;
+}
+
+/* Mobile container */
+.phone {
+  width: min(100vw, 430px);
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  position: relative;
+}
+
+.screen {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* SCREEN 1 */
+.closed-card {
+  width: min(100%, 356px);
+  height: 560px;
+  background: rgba(255, 253, 248, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  animation: floatIn 0.9s ease both;
+}
+
+.closed-card::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(49, 93, 104, 0.22);
+  border-radius: 22px;
+}
+
+.closed-card::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: rgba(231, 182, 198, 0.18);
+  filter: blur(12px);
+  right: -100px;
+  bottom: -80px;
+}
+
+.cover-band {
+  width: 100%;
+  height: 150px;
+  position: absolute;
+  left: 0;
+  top: 195px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.10),
+      rgba(255, 255, 255, 0.10)
+    ),
+    url("water-lilies.jpg") center / cover no-repeat;
+  box-shadow: 0 16px 36px rgba(39, 72, 83, 0.22);
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition:
+    transform 0.85s cubic-bezier(0.2, 0.75, 0.15, 1),
+    opacity 0.6s ease;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.cover-band::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  /* border: 1px solid rgba(255, 255, 255, 0.65); */
+}
+
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 55%;
+  background: linear-gradient(
+    transparent,
+    rgba(22, 47, 58, 0.28)
+  );
+}
+
+.cover-name {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-size: clamp(1.65rem, 8vw, 2.28rem);
+  line-height: 1.2;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
+  padding: 0 22px;
+}
+
+.cover-subtitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 86px;
+  z-index: 2;
+  text-align: center;
+  color: var(--deep);
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* Tap icon */
+.tap-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--deep);
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  box-shadow: 0 10px 24px rgba(20, 44, 53, 0.16);
+  transition: 0.42s ease;
+  z-index: 5;
+}
+
+.tap-hint.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  animation: pulseHint 1.4s ease-in-out infinite;
+}
+
+/* Animación cuando abre */
+.closed-card.opening .cover-band {
+  transform: rotateY(-78deg) rotate(-6deg) translateX(-35px);
+  opacity: 0;
+}
+
+.closed-card.opening {
+  animation: fadeOut 0.82s ease 0.22s forwards;
+}
+
+/* SCREEN 2 
+.invitation-card {
+  width: min(100%, 354px);
+  background: rgba(255, 253, 248, 0.95);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  animation: riseCard 0.76s ease forwards;
+  transition:
+    filter 0.35s ease,
+    transform 0.35s ease;
+}
+
+.invitation-card.dimmed {
+  filter: brightness(0.72) blur(1.7px);
+  transform: scale(0.985);
+}
+
+.art-window {
+  width: 100%;
+  aspect-ratio: 1.42 / 1;
+  border-radius: 19px;
+  overflow: hidden;
+  background: url("water-lilies.jpg") center / cover no-repeat;
+}
+
+.invite-content {
+  text-align: center;
+  padding: 24px 14px 0;
+}
+
+.eyebrow {
+  color: var(--soft);
+  font-size: 0.72rem;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  margin: 0 0 14px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.55rem;
+  letter-spacing: 0.23em;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.45;
+}
+
+.script-text {
+  margin: 6px 0 12px;
+  color: var(--deep);
+  font-size: 1.45rem;
+  font-style: italic;
+  line-height: 1;
+}
+
+.details {
+  margin: 16px 0 18px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  color: #2b2a32;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+
+.note {
+  margin: 0 auto 18px;
+  max-width: 245px;
+  color: var(--soft);
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}*/
+
+/* Buttons */
+.btn {
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 13px 28px;
+  font-family: Arial, sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.rsvp-btn,
+.submit-btn {
+  color: #ffffff;
+  background: var(--deep);
+  box-shadow: 0 12px 26px rgba(49, 93, 104, 0.26);
+}
+
+.submit-btn:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+/* SCREEN 2: 2.2 */
+.invitation-card {
+  width: min(100%, 354px);
+  max-height: calc(100svh - 44px);
+  overflow-y: auto;
+  background: rgba(255, 253, 248, 0.97);
+  border-radius: 30px;
+  box-shadow: 0 28px 80px rgba(23, 42, 53, 0.28);
+  padding: 18px 18px 22px;
+  position: relative;
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  animation: riseCard 0.76s ease forwards;
+  transition:
+    filter 0.35s ease,
+    transform 0.35s ease;
+}
+
+
+.invitation-card {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* Edge antiguo */
+}
+
+.invitation-card::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari, Edge */
+}
+
+.invitation-card::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.invitation-card.dimmed {
+  filter: brightness(0.72) blur(1.7px);
+  transform: scale(0.985);
+}
+
+.art-window {
+  width: 100%;
+  aspect-ratio: 1.45 / 1;
+  border-radius: 22px;
+  overflow: hidden;
+  background: url("water-lilies.jpg") center 35% / cover no-repeat;
+  box-shadow: 0 14px 32px rgba(49, 93, 104, 0.17);
+}
+
+.invite-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 22px 12px 0;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #6d6670;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  line-height: 1.7;
+}
+
+h1 {
+  margin: 0;
+  color: #1f2229;
+  font-size: clamp(1.9rem, 8vw, 2.35rem);
+  letter-spacing: 0.20em;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.script-text {
+  margin: 8px 0 14px;
+  color: var(--deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.75rem;
+  font-style: italic;
+  line-height: 1;
+}
+
+.divider {
+  width: 54px;
+  height: 1px;
+  margin: 16px auto 18px;
+  background: rgba(49, 93, 104, 0.35);
+}
+
+/* Details hierarchy */
+.event-details {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto 18px;
+}
+
+.detail-block {
+  padding: 0;
+  text-align: center;
+}
+
+.detail-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #8a7f86;
+  font-family: Arial, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+}
+
+.detail-block strong {
+  display: block;
+  color: #2a2930;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.55;
+}
+
+.date-block strong {
+  font-size: 0.86rem;
+}
+
+.location-block {
+  margin: 2px auto;
+  padding: 12px 10px;
+  border-top: 1px solid rgba(49, 93, 104, 0.13);
+  border-bottom: 1px solid rgba(49, 93, 104, 0.13);
+}
+
+.location-block strong {
+  margin-bottom: 6px;
+}
+
+.location-block p {
+  margin: 0;
+  color: #4f4d56;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.09em;
+  line-height: 1.65;
+  text-transform: uppercase;
+}
+
+.note {
+  margin: 14px auto 18px;
+  max-width: 260px;
+  color: #6c6872;
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+/* RSVP button */
+.rsvp-btn {
+  min-width: 122px;
+  padding: 14px 30px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #315d68, #527f8d);
+  box-shadow: 0 14px 28px rgba(49, 93, 104, 0.30);
+  font-size: 0.78rem;
+  letter-spacing: 0.20em;
+}
+
+.rsvp-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Overlay RSVP */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(10, 24, 31, 0.32);
+  backdrop-filter: blur(5px);
+  z-index: 20;
+  animation: fadeIn 0.25s ease both;
+}
+
+.modal {
+  width: min(100%, 342px);
+  background: rgba(255, 253, 248, 0.98);
+  border-radius: 25px;
+  padding: 22px;
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: modalIn 0.46s cubic-bezier(0.2, 0.82, 0.22, 1) both;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(143, 184, 201, 0.18);
+  color: var(--deep);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.modal-title {
+  margin: 14px 0 6px;
+  text-align: center;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1.05rem;
+}
+
+.modal-subtitle {
+  margin: 0 auto 18px;
+  text-align: center;
+  color: var(--soft);
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* Sí / No */
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.choice {
+  position: relative;
+  border: 1px solid rgba(49, 93, 104, 0.18);
+  border-radius: 18px;
+  padding: 14px 12px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: var(--deep);
+  cursor: pointer;
+  background: rgba(143, 184, 201, 0.08);
+}
+
+.choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.check {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 8px;
+  border: 1.7px solid rgba(49, 93, 104, 0.42);
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  color: transparent;
+  transition: 0.18s ease;
+}
+
+.choice input:checked + .check {
+  background: var(--deep);
+  color: #ffffff;
+  border-color: var(--deep);
+  box-shadow: 0 8px 18px rgba(49, 93, 104, 0.22);
+}
+
+.choice input:checked + .check::before {
+  content: "✓";
+  font-size: 0.95rem;
+}
+
+/* Family name */
+.field {
+  margin: 10px 0 16px;
+  animation: fadeIn 0.26s ease both;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--soft);
+  font-family: Arial, sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 1px solid rgba(49, 93, 104, 0.18);
+  border-radius: 16px;
+  padding: 14px 15px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  font-size: 1rem;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: rgba(49, 93, 104, 0.48);
+  box-shadow: 0 0 0 4px rgba(143, 184, 201, 0.18);
+}
+
+.error {
+  min-height: 18px;
+  color: #9a3f4f;
+  font-family: Arial, sans-serif;
+  font-size: 0.76rem;
+  text-align: center;
+  margin: 8px 0 0;
+}
+
+/* Pop up */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(24px);
+  width: min(calc(100vw - 42px), 340px);
+  padding: 15px 18px;
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.96);
+  color: var(--deep);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 0.92rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.26s ease;
+  z-index: 40;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Animations */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+    pointer-events: none;
+  }
+}
+
+@keyframes riseCard {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulseHint {
+  0%,
+  100% {
+    box-shadow: 0 10px 24px rgba(20, 44, 53, 0.14);
+  }
+
+  50% {
+    box-shadow: 0 12px 34px rgba(49, 93, 104, 0.34);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
