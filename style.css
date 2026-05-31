@@ -55,11 +55,11 @@ body::after {
 
 /* Mobile container */
 .phone {
-  width: min(100vw, 430px);
+  width: 100vw;
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: 22px;
+  padding: 12px;
   position: relative;
 }
 
@@ -327,7 +327,7 @@ h1 {
   cursor: not-allowed;
 }
 
-/* SCREEN 2: 2.2 */
+/* SCREEN 2: 2.2 
 .invitation-card {
   width: min(100%, 354px);
   max-height: calc(100svh - 44px);
@@ -343,17 +343,38 @@ h1 {
   transition:
     filter 0.35s ease,
     transform 0.35s ease;
+}*/
+.invitation-card {
+  width: min(94vw, 390px);
+  max-height: calc(100svh - 24px);
+  overflow-y: auto;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  background: rgba(255, 253, 248, 0.97);
+  border-radius: 30px;
+  box-shadow: 0 28px 80px rgba(23, 42, 53, 0.28);
+  padding: 18px 18px 22px;
+  position: relative;
+
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  animation: riseCard 0.76s ease forwards;
+  transition:
+    filter 0.35s ease,
+    transform 0.35s ease;
 }
 
+.invitation-card::-webkit-scrollbar {
+  display: none;
+}
 
 .invitation-card {
   scrollbar-width: none;        /* Firefox */
   -ms-overflow-style: none;     /* Edge antiguo */
 }
 
-.invitation-card::-webkit-scrollbar {
-  display: none;                /* Chrome, Safari, Edge */
-}
 
 .invitation-card::before {
   content: "";
@@ -451,6 +472,11 @@ h1 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.55;
+}
+
+.detail-block a{
+  color: #2a2930;
+  text-decoration: solid underline #2a2930;
 }
 
 .date-block strong {
@@ -741,5 +767,51 @@ input[type="text"]:focus {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .phone {
+    padding: 8px;
+  }
+
+  .invitation-card {
+    width: min(95vw, 390px);
+    border-radius: 28px;
+    padding: 16px 16px 20px;
+  }
+
+  .art-window {
+    height: 170px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    letter-spacing: 0.18em;
+  }
+
+  .script-text {
+    font-size: 1.65rem;
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+  }
+
+  .detail-block strong {
+    font-size: 0.8rem;
+  }
+
+  .location-block p {
+    font-size: 0.72rem;
+  }
+
+  .note {
+    font-size: 0.76rem;
+  }
+
+  .rsvp-btn {
+    min-width: 140px;
+    padding: 14px 34px;
   }
 }
