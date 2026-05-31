@@ -90,7 +90,7 @@ function showToast(message) {
 
   setTimeout(() => {
     toast.classList.remove("show");
-  }, 3900);
+  }, 5600);
 }
 
 // Enviar datos a Google Sheets
@@ -147,7 +147,7 @@ rsvpForm.addEventListener("submit", async (event) => {
     rsvpForm.reset();
 
     if (attending === "Sí") {
-      showToast(`¡Gracias, ${family}! Nos vemos en la fiesta ✨`);
+      showToast(`¡Gracias, ${family}! Sabras de nosotros muy pronto para los pases. Nos vemos en la fiesta ✨`);
     } else {
       showToast(`Gracias por avisarnos, ${family} 💙`);
     }
